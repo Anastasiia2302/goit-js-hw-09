@@ -57,7 +57,10 @@ flatpickr(("#datetime-picker"), {}
 //       console.log(selectedDates[0]);
 //     },
 //   };
+
+
 //  обновляем таймер
+
 function updateTimer ({days, hours, minutes, seconds }){
     value.textContent = `${days}:${hours}:${minutes}:${seconds}`;
 
