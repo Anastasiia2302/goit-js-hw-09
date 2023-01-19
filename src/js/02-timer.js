@@ -7,20 +7,36 @@ const field = document.querySelectorAll('.field')
 let value = document.querySelectorAll('.value')
 
 // Запускаем таймер (устанавливаем текущее время и время старта)
-const timer = {
+
+class Timer {
+    constructor() {
+        this.intervalId = null;
+        this.isActive = false;}
     start() {
-        const startNow = Date.now();
-        setInterval(() => {
-            const currentTime = Date.now();
-            const deltaTime = currentTime - startNow;
-            const { days, hours, minutes, seconds } = convertMs(deltaTime);
-            console.log(`${days}:${hours}:${minutes}:${seconds}`);
-        }, 1000);
+            if(this.isActive) {
+                return };
+    
+            const startTime = Date.now();
+            this.isActive = true;
+    
+            this.intervalId = setInterval(() => {
+                const currentTime = Date.now();
+                const deltaTime = currentTime - startTime;
+                const time = convertMs(deltaTime);
+                updateTimer(time);
+                
+                console.log(`${days}:${hours}:${minutes}:${seconds}`);
+            }, 1000);
+    
+        }
+    stop() {
+            clearInterval(this.intervalId);
+            this.isActive = false;
+        }
+}
 
-    },
-};
-// timer.start();
-
+   const timer = new Timer();
+    
 // конвертер для вывода даты
 function convertMs(ms) {
     
@@ -61,8 +77,8 @@ flatpickr(("#datetime-picker"), {}
 
 //  обновляем таймер
 
-function updateTimer ({days, hours, minutes, seconds }){
-    value.textContent = `${days}:${hours}:${minutes}:${seconds}`;
+function updateTimer (){
+    value.textContent 
 
 }
 
