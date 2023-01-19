@@ -12,14 +12,16 @@ btnStart.addEventListener('click', startTimer)
 let timer = null;
 btnStart.disabled = false;
 
+const anyDate = selectedDates;
+
 const options = {
     enableTime: true,
     time_24hr: true,
     defaultDate: new Date(),
     minuteIncrement: 1,
-    onClose(selectedDates) {
-      if(selectedDates[0] <= new Date)
-      {alert("Please choose a date in the future")
+    onClose(anyDate) {
+      if(anyDate[0] <= new Date) {
+        alert("Please choose a date in the future")
       return};
       btnStart.removeAttribute('disabled');
     },
@@ -63,7 +65,7 @@ function addLeadingZero(value) {
 
 function addTimer () {
     const currentDate = new Date();
-    const deltaDate = selectedDates[0] - currentDate;
+    const deltaDate = anyDate[0] - currentDate;
     console.log(deltaDate);
     if (deltaDate <= 0) {
         btnStart.disabled = true;
