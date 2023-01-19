@@ -11,21 +11,32 @@ btnStart.addEventListener('click', startTimer)
 
 let timer = null;
 btnStart.disabled = false;
-
-const anyDate = selectedDates;
+let selectedDates;
 
 const options = {
     enableTime: true,
     time_24hr: true,
     defaultDate: new Date(),
     minuteIncrement: 1,
-    onClose(anyDate) {
-      if(anyDate[0] <= new Date) {
+    onClose(anyDates) {
+      if(anyDates[0] <= new Date) {
         alert("Please choose a date in the future")
       return};
+      selectedDates = anyDates[0];
       btnStart.removeAttribute('disabled');
+      
     },
   };
+  // Запускаем таймер (устанавливаем текущее время и время старта)
+function addTimer () {
+    const currentDate = new Date();
+    const deltaDate = selectedDates[0] - currentDate;
+    console.log(deltaDate);
+    if (deltaDate <= 0) {
+        btnStart.disabled = true;
+        return
+    }
+}
 
   // конвертер для вывода даты
 function convertMs(deltaDate) {
@@ -59,19 +70,7 @@ function addLeadingZero(value) {
 // secondsEl.textContent = 
 
 
-// Запускаем таймер (устанавливаем текущее время и время старта)
 
-
-
-function addTimer () {
-    const currentDate = new Date();
-    const deltaDate = anyDate[0] - currentDate;
-    console.log(deltaDate);
-    if (deltaDate <= 0) {
-        btnStart.disabled = true;
-        return
-    }
-}
 
 
 // подключаем библиотеку пикер
