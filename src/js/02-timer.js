@@ -1,5 +1,6 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import Notiflix from 'notiflix';
 
 const btnStart = document.querySelector("[data-start]");
 const daysEl = document.querySelector("[data-days]");
@@ -9,9 +10,28 @@ const secondsEl = document.querySelectorAll("[data-seconds]")
 
 btnStart.addEventListener('click', startTimer)
 
-let timer = null;
-btnStart.disabled = false;
+let timer;
+btnStart.disabled = true;
 let selectedDates;
+
+
+  // конвертер для вывода даты
+  function convertMs(ms) {
+    
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+   
+    
+    const days = addLeadingZero((Math.floor(ms / day)));
+    const hours = addLeadingZero((Math.floor((ms % day) / hour)));
+    const minutes = addLeadingZero((Math.floor(((ms % day) % hour) / minute)));
+    const seconds = addLeadingZero((Math.floor((((ms % day) % hour) % minute) / second)));
+  
+    return { days, hours, minutes, seconds };
+    
+  }
 
 const options = {
     enableTime: true,
@@ -20,10 +40,12 @@ const options = {
     minuteIncrement: 1,
     onClose(anyDates) {
       if(anyDates[0] <= new Date) {
-        alert("Please choose a date in the future")
+        Notiflix.Notify.failure("Please choose a date in the future")
       return};
+
       selectedDates = anyDates[0];
       btnStart.removeAttribute('disabled');
+      
       
     },
   };
@@ -31,43 +53,28 @@ const options = {
 function addTimer () {
     const currentDate = new Date();
     const deltaDate = selectedDates[0] - currentDate;
-    console.log(deltaDate);
-    if (deltaDate <= 0) {
-        btnStart.disabled = true;
-        return
+  
+    if (deltaDate < 0) {
+      btnStart.disabled = false;
+        return;
     }
 }
 
-  // конвертер для вывода даты
-function convertMs(deltaDate) {
-    
-    const second = 1000;
-    const minute = second * 60;
-    const hour = minute * 60;
-    const day = hour * 24;
-  
-    
-    const days = addLeadingZero((Math.floor(ms / day)));
-    const hours = addLeadingZero((Math.floor((ms % day) / hour)));
-    const minutes = addLeadingZero((Math.floor(((ms % day) % hour) / minute)));
-    const seconds = addLeadingZero((Math.floor((((ms % day) % hour) % minute) / second)));
-  
-    return { days, hours, minutes, seconds };
-  }
 
-//   ф-ция для 2х символов
-function addLeadingZero(value) {
-    return String(value).padStart(2,0);
+  // ф-ция для 2х символов
+function addLeadingZero({days, hours, minutes, seconds }) {
+    return String({days, hours, minutes, seconds }).padStart(2,0);
 }
 
 
 // изменяем значение счетчика 
 
+const {days, hours, minutes, seconds} = convertMs(selectedDates)
+daysEl.textContent = days;
+hoursEl.textContent = hours;
+minutesEl.textContent = minutes;
+secondsEl.textContent = seconds;
 
-// daysEl.textContent = 
-// hoursEl.textContent = 
-// minutesEl.textContent = 
-// secondsEl.textContent = 
 
 
 
