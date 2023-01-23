@@ -25,7 +25,7 @@ const {
 } = event.currentTarget;
 let delayInput = Number(delay.value);
 
-for (let i = 1; i <= Number(amount.value); i + 1) {
+for (let i = 1; i <= Number(amount.value); i += 1) {
 
 createPromise(i, delayInput)
   .then(({ position, delay }) => {
