@@ -17,7 +17,7 @@ function getRandomHexColor() {
 btnStop.disabled = true;
 let color;
 
-// создаем функцию интервала для старта и вешем фон на боди
+// создаем функцию интервала для старта и вешaем фон на боди
 
 function startBtnClick () {
     btnStop.disabled = false;

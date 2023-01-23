@@ -17,7 +17,7 @@ function createPromise(position, delay) {
   });
 }
 
-function onSubmitForm (event){
+function onSubmitForm (event) {
 event.preventDefault();
 const {
   elements: { delay, step, amount },
