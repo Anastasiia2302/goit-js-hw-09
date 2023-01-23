@@ -13,7 +13,8 @@ function createPromise(position, delay) {
       resolve({position, delay});
     } else {
       reject({position, delay});
-    }}, delay)
+    }
+  }, delay)
   });
 }
 
@@ -24,7 +25,7 @@ const {
 } = event.currentTarget;
 let delayInput = Number(delay.value);
 
-for (let i = 1; i <= Number(amount.value); i++)
+for (let i = 1; i <= Number(amount.value); i + 1) {
 
 createPromise(i, delayInput)
   .then(({ position, delay }) => {
@@ -32,10 +33,12 @@ createPromise(i, delayInput)
   })
   .catch(({ position, delay }) => {
     Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
-    delayInput += Number(step.value);
   });
+    delayInput += Number(step.value); 
+  }
+  
   event.currentTarget.reset();
-}
+};
 
 
 
